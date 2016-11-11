@@ -21,7 +21,7 @@ class JavaLibTarget extends JavaTarget {
         // Retrolambda
         if (project.plugins.hasPlugin('me.tatarka.retrolambda')) {
             retrolambda = new Scope(project, ["retrolambdaConfig"] as Set)
-            extraJvmArgs.addAll(["-bootclasspath", bootClasspath])
+//            extraJvmArgs.addAll(["-bootclasspath", bootClasspath])
         } else {
             retrolambda = null
         }
