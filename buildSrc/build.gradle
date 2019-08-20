@@ -99,7 +99,7 @@ task sourcesJar(type: Jar) {
     classifier = "sources"
 }
 
-def publishVersion = "0.48.6-airbnb1"
+def publishVersion = "0.48.6-airbnb1-anoopc6-SNAPSHOT"
 group = "com.uber"
 version = publishVersion
 def siteUrl = "https://github.com/uber/okbuck"
@@ -114,6 +114,15 @@ publishing {
             artifact javadocJar
 
             artifactId "okbuck"
+        }
+    }
+    repositories {
+        maven {
+            url "https://artifactory.d.musta.ch/artifactory/maven-airbnb-snapshots"
+            credentials {
+                username findProperty('ARTIFACTORY_USERNAME')
+                password findProperty('ARTIFACTORY_PASSWORD')
+            }
         }
     }
 }
