@@ -67,9 +67,10 @@ public final class DependencyUtils {
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public static boolean isConsumable(File file) {
     // Skip artifact files which are coming from the transformed folder.
-    // transforms-1 contains the contents of the resolved aar/jar and
+    // transforms-1, transforms-2 contains the contents of the resolved aar/jar and
     // hence should not be consumed.
-    if (file.getAbsolutePath().contains("transforms-1/files-1")) {
+    if (file.getAbsolutePath().contains("transforms-1/files-1")
+            || file.getAbsolutePath().contains("transforms-2/files-2")) {
       return false;
     }
     return FilenameUtils.isExtension(file.getName(), ALLOWED_EXTENSIONS);
