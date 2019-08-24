@@ -556,10 +556,12 @@ public class JvmTarget extends Target {
    */
   public Set<ExternalDependency> getExternalDeps(boolean test) {
     if (test) {
-      return Sets.intersection(getTest().getExternalDeps(), getTestProvided().getExternalDeps());
+//      return Sets.intersection(getTest().getExternalDeps(), getTestProvided().getExternalDeps());
+      return getTest().getExternalDeps();
     } else {
       return Sets.difference(
-          Sets.intersection(getMain().getExternalDeps(), getProvided().getExternalDeps()),
+//          Sets.intersection(getMain().getExternalDeps(), getProvided().getExternalDeps()),
+          getMain().getExternalDeps(),
           getApiExternalDeps());
     }
   }
