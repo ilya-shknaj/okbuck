@@ -709,7 +709,7 @@ public class JvmTarget extends Target {
       case INTEGRATION_TEST:
         // return Sets.intersection(getIntegrationTest().getExternalDeps(),
         //     getIntegrationTestProvided().getExternalDeps());
-        return getIntegrationTest().getExternalDeps()
+        return getIntegrationTest().getExternalDeps();
 
       default:
         return Sets.difference(
