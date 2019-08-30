@@ -695,16 +695,26 @@ public class JvmTarget extends Target {
    * @return Target deps
    */
   public Set<ExternalDependency> getExternalDeps(SourceSetType sourceSetType) {
+    // ISSUE: https://github.com/uber/okbuck/issues/872
+    // Starting gradle 5+, compile and runtime deps for external-modules are treated separately in Gradle
+    // (https://github.com/gradle/gradle/issues/977). Unfortunately, BUCK doesn't provide a way to specify
+    // runtime_deps for prebuilt_jar/java_library rules; So to ensure that runtime deps are included in
+    // build output, we are treating all runtime deps as compiletime deps for external modules.
+    // I suspect this might result in increased build time, hence needs to fixed more appropriately.
+    // Interstingly, Bazel provides this semantics with java_import/java_library::runtime_deps attribute.
     switch (sourceSetType) {
       case TEST:
-        return Sets.intersection(getTest().getExternalDeps(), getTestProvided().getExternalDeps());
+        // return Sets.intersection(getTest().getExternalDeps(), getTestProvided().getExternalDeps());
+        return getTest().getExternalDeps();
       case INTEGRATION_TEST:
-        return Sets.intersection(getIntegrationTest().getExternalDeps(),
-            getIntegrationTestProvided().getExternalDeps());
+        // return Sets.intersection(getIntegrationTest().getExternalDeps(),
+        //     getIntegrationTestProvided().getExternalDeps());
+        return getIntegrationTest().getExternalDeps()
 
       default:
         return Sets.difference(
-            Sets.intersection(getMain().getExternalDeps(), getProvided().getExternalDeps()),
+            // Sets.intersection(getMain().getExternalDeps(), getProvided().getExternalDeps()),
+            getMain().getExternalDeps(),
             getApiExternalDeps());
     }
   }
